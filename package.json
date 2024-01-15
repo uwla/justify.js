@@ -1,0 +1,11 @@
+{
+    "nam": "justify.js",
+    "scripts": {
+        "build": "tsc",
+        "test": "vitest"
+    },
+    "devDependencies": {
+        "typescript": "^5.3.3",
+        "vitest": "^1.2.0"
+    }
+}

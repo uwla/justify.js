@@ -1,0 +1,9 @@
+# ignore vendor packages
+node_modules
+
+# ignore compiled assets
+dist/
+
+# ignore IDE files
+tags
+.vscode/
