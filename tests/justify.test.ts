@@ -1,5 +1,6 @@
 import * as justify from "../src/justify";
 import { expect, test } from "vitest";
+import { sampleInput, sampleInputJustified } from "./data";
 
 test("justify block", () => {
     const text =
@@ -24,17 +25,21 @@ test("justify list item", () => {
         "Est incidunt perferendis sed beatae sint provident culpa. Ducimus ea nemo animi ea et et et. Cumque eos quidem in quia velit vel rerum. Repellendus possimus provident qui veritatis magnam totam.";
     const bullets = ["- ", "* ", "\\item ", "1. ", "1) ", "12. ", "12) "];
     const expected = [
-        "- Est incidunt perferendis sed beatae sint  provident  culpa.  Ducimus  ea  nemo\n  animi ea et et et. Cumque eos quidem in  quia  velit  vel  rerum.  Repellendus\n  possimus provident qui veritatis magnam totam.\n",
-        "* Est incidunt perferendis sed beatae sint  provident  culpa.  Ducimus  ea  nemo\n  animi ea et et et. Cumque eos quidem in  quia  velit  vel  rerum.  Repellendus\n  possimus provident qui veritatis magnam totam.\n",
-        "\\item Est incidunt perferendis sed beatae sint provident culpa. Ducimus ea  nemo\n      animi ea et et et. Cumque eos quidem in quia velit vel rerum.  Repellendus\n      possimus provident qui veritatis magnam totam.\n",
-        "1. Est incidunt perferendis sed beatae sint provident  culpa.  Ducimus  ea  nemo\n   animi ea et et et. Cumque eos quidem in quia  velit  vel  rerum.  Repellendus\n   possimus provident qui veritatis magnam totam.\n",
-        "1) Est incidunt perferendis sed beatae sint provident  culpa.  Ducimus  ea  nemo\n   animi ea et et et. Cumque eos quidem in quia  velit  vel  rerum.  Repellendus\n   possimus provident qui veritatis magnam totam.\n",
-        "12. Est incidunt perferendis sed beatae sint provident culpa.  Ducimus  ea  nemo\n    animi ea et et et. Cumque eos quidem in quia velit  vel  rerum.  Repellendus\n    possimus provident qui veritatis magnam totam.\n",
-        "12) Est incidunt perferendis sed beatae sint provident culpa.  Ducimus  ea  nemo\n    animi ea et et et. Cumque eos quidem in quia velit  vel  rerum.  Repellendus\n    possimus provident qui veritatis magnam totam.\n",
+        "- Est incidunt perferendis sed beatae sint  provident  culpa.  Ducimus  ea  nemo\n  animi ea et et et. Cumque eos quidem in  quia  velit  vel  rerum.  Repellendus\n  possimus provident qui veritatis magnam totam.",
+        "* Est incidunt perferendis sed beatae sint  provident  culpa.  Ducimus  ea  nemo\n  animi ea et et et. Cumque eos quidem in  quia  velit  vel  rerum.  Repellendus\n  possimus provident qui veritatis magnam totam.",
+        "\\item Est incidunt perferendis sed beatae sint provident culpa. Ducimus ea  nemo\n      animi ea et et et. Cumque eos quidem in quia velit vel rerum.  Repellendus\n      possimus provident qui veritatis magnam totam.",
+        "1. Est incidunt perferendis sed beatae sint provident  culpa.  Ducimus  ea  nemo\n   animi ea et et et. Cumque eos quidem in quia  velit  vel  rerum.  Repellendus\n   possimus provident qui veritatis magnam totam.",
+        "1) Est incidunt perferendis sed beatae sint provident  culpa.  Ducimus  ea  nemo\n   animi ea et et et. Cumque eos quidem in quia  velit  vel  rerum.  Repellendus\n   possimus provident qui veritatis magnam totam.",
+        "12. Est incidunt perferendis sed beatae sint provident culpa.  Ducimus  ea  nemo\n    animi ea et et et. Cumque eos quidem in quia velit  vel  rerum.  Repellendus\n    possimus provident qui veritatis magnam totam.",
+        "12) Est incidunt perferendis sed beatae sint provident culpa.  Ducimus  ea  nemo\n    animi ea et et et. Cumque eos quidem in quia velit  vel  rerum.  Repellendus\n    possimus provident qui veritatis magnam totam.",
     ];
 
     for (let i = 0; i < bullets.length; i += 1) {
         const item = bullets[i] + original;
         expect(justify.justifyListItem(item, n)).toBe(expected[i]);
     }
+});
+
+test("justify whole text", () => {
+    expect(justify.justify(sampleInput)).toBe(sampleInputJustified);
 });
