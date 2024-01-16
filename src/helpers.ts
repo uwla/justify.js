@@ -40,11 +40,11 @@ export function isTitle(line: string): Boolean {
 export function textToBlocks(text: string): string[] {
     const lines = text.split("\n");
     const l = lines.length;
-    let blocks : string[] = [];
-    let block : string = "";
+    let blocks: string[] = [];
+    let block: string = "";
 
     for (let i = 0; i < l; i += 1) {
-        let line : string = lines[i];
+        let line: string = lines[i];
 
         if (isBlank(line) || isLatexCommand(line)) {
             if (block !== "") {
@@ -57,16 +57,16 @@ export function textToBlocks(text: string): string[] {
                 blocks.push(block);
             }
             block = line;
-        } else  {
-            if (block !== '') {
-                block += '\n';
+        } else {
+            if (block !== "") {
+                block += "\n";
             }
             block += line;
         }
 
         // We are in the last line and have a non-empty block, so add it.
         // If block is blank, it was already added.
-        if (i === l-1 && !isBlank(block)) {
+        if (i === l - 1 && !isBlank(block)) {
             blocks.push(block);
         }
     }
@@ -79,19 +79,19 @@ export function detectIndentation(text: string): string {
     const l = lines.length;
 
     if (l === 0) {
-        throw new Error('No lines detected');
+        throw new Error("No lines detected");
     }
 
     let firstLine = lines[0];
     const match = firstLine.match(/^[\s\t]+/);
     if (match === null) {
-        return '';
+        return "";
     }
 
     const indentation = match[0];
     for (let line of lines) {
-        if (! line.startsWith(indentation) ) {
-            return '';
+        if (!line.startsWith(indentation)) {
+            return "";
         }
     }
 
@@ -99,16 +99,16 @@ export function detectIndentation(text: string): string {
 }
 
 export function detectMultilinePrefix(text: string): string {
-    const lines =  text.split("\n");
+    const lines = text.split("\n");
     const l = lines.length;
 
     if (l < 2) {
-        return '';
+        return "";
     }
 
     let firstLine = lines[0];
-    let linesAfterTheFirst = lines.slice(0, l-1);
-    let prefix = '';
+    let linesAfterTheFirst = lines.slice(0, l - 1);
+    let prefix = "";
     let i = 0;
     while (true) {
         let stop = false;
@@ -118,7 +118,7 @@ export function detectMultilinePrefix(text: string): string {
             break;
         }
 
-        let currentCharacter =  firstLine[i];
+        let currentCharacter = firstLine[i];
 
         // check if all other lines match the current prefix
         for (let line of linesAfterTheFirst) {
@@ -140,11 +140,11 @@ export function detectMultilinePrefix(text: string): string {
     // because such prefixes only apply  to  the  first  line,  not  to  all  lines.
     // Therefore, if pattern matches a list item, it is not a prefix.
     if (isIndentedStartOfListItem(prefix)) {
-        return '';
+        return "";
     }
 
     // remove alpha numeric characters from pattern
-    prefix = prefix.replace(/\w.*/, '');
+    prefix = prefix.replace(/\w.*/, "");
 
     // return it
     return prefix;
@@ -152,19 +152,19 @@ export function detectMultilinePrefix(text: string): string {
 
 export function removeMultilinePrefix(text: string, prefix: string) {
     const lines = text.split("\n");
-    let newText = '';
+    let newText = "";
     let lastLine = lines.pop() as any;
     for (let line of lines) {
-        let newLine = line.replace(prefix as any, '');
+        let newLine = line.replace(prefix as any, "");
         newText += newLine + "\n";
     }
-    newText += lastLine.replace(prefix as any, '');
+    newText += lastLine.replace(prefix as any, "");
     return newText;
 }
 
 export function prependMultilinePrefix(text: string, prefix: string) {
     const lines = text.split("\n");
-    let newText = '';
+    let newText = "";
     let lastLine = lines.pop();
     for (let line of lines) {
         newText += prefix + line + "\n";

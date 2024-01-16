@@ -1,17 +1,24 @@
-import { REGEX_LIST_ITEM, detectIndentation, detectMultilinePrefix, isBlank, isStartOfListItem, prependMultilinePrefix, removeMultilinePrefix, textToBlocks } from "./helpers";
+import {
+    REGEX_LIST_ITEM,
+    detectIndentation,
+    detectMultilinePrefix,
+    isBlank,
+    isStartOfListItem,
+    prependMultilinePrefix,
+    removeMultilinePrefix,
+    textToBlocks,
+} from "./helpers";
 
 type Sentence = {
     length: number;
     words: Array<string>;
 };
 
-export function justifyBlock(text: string, n : number  = 80): string {
-    const words = (text as any).replace(/[\s\n]+/g, ' ').split(' ');
+export function justifyBlock(text: string, n: number = 80): string {
+    const words = (text as any).replace(/[\s\n]+/g, " ").split(" ");
 
     // this data structure will be used to build the text
-    let sentences : Sentence[] = [
-        { length: 0, words: [] },
-    ];
+    let sentences: Sentence[] = [{ length: 0, words: [] }];
 
     // build the sentence structure
     let currentSentenceLength = 0;
@@ -42,12 +49,12 @@ export function justifyBlock(text: string, n : number  = 80): string {
     }
 
     const l = sentences.length;
-    let newText = '';
+    let newText = "";
 
     // justify single sentence
-    for (let i = 0; i < l-1; i+= 1) {
+    for (let i = 0; i < l - 1; i += 1) {
         let sentence = sentences[i] as Sentence;
-        let line = '';
+        let line = "";
         let words = sentence.words.slice(0).reverse(); // slice returns a copy
         let nWords = words.length;
 
@@ -56,10 +63,7 @@ export function justifyBlock(text: string, n : number  = 80): string {
         }
 
         // extra spaces logic
-        let totalExtraSpaces,
-            spaceGaps,
-            spacePerGap,
-            remainingSpaces;
+        let totalExtraSpaces, spaceGaps, spacePerGap, remainingSpaces;
 
         if (nWords === 1) {
             totalExtraSpaces = 0;
@@ -73,7 +77,7 @@ export function justifyBlock(text: string, n : number  = 80): string {
         }
 
         // adds extra spaces between words evenly
-        for (let j = 0; j < nWords-1; j+= 1) {
+        for (let j = 0; j < nWords - 1; j += 1) {
             let word = words[j];
             let extraSpaces;
             if (remainingSpaces > 0) {
@@ -82,7 +86,7 @@ export function justifyBlock(text: string, n : number  = 80): string {
             } else {
                 extraSpaces = spacePerGap;
             }
-            let spaces = ' ' + ' '.repeat(extraSpaces);
+            let spaces = " " + " ".repeat(extraSpaces);
             line = spaces + word + line;
         }
 
@@ -97,7 +101,7 @@ export function justifyBlock(text: string, n : number  = 80): string {
     let lastSentence = sentences[l - 1] as Sentence;
 
     // join the words of the last sentence and trim whitespace
-    newText += lastSentence.words.join(" ").replace(/\s+$/, '');
+    newText += lastSentence.words.join(" ").replace(/\s+$/, "");
 
     return newText;
 }
@@ -105,15 +109,15 @@ export function justifyBlock(text: string, n : number  = 80): string {
 export function justifyListItem(text: string, n: number): string {
     const match = text.match(REGEX_LIST_ITEM);
     if (match === null) {
-        throw Error('Provided text is not a list item');
+        throw Error("Provided text is not a list item");
     }
 
     const bullet = match[0];
     const indentationOffset = bullet.length;
-    const indentation  = ' '.repeat(indentationOffset);
+    const indentation = " ".repeat(indentationOffset);
 
     // first, we remove the bullet
-    let newText = text.replace(bullet, '');
+    let newText = text.replace(bullet, "");
 
     // then, we add indentation to all lines
     newText = justifyBlock(newText, n - indentationOffset);
@@ -127,12 +131,16 @@ export function justifyListItem(text: string, n: number): string {
     return newText;
 }
 
-export function justify(text: string, n : number = 80, depth : number = 2): string {
-    let newText = '';
+export function justify(
+    text: string,
+    n: number = 80,
+    depth: number = 2,
+): string {
+    let newText = "";
     let textIndentation = detectIndentation(text);
     let blocks;
 
-    if (textIndentation !== '') {
+    if (textIndentation !== "") {
         blocks = textToBlocks(removeMultilinePrefix(text, textIndentation));
     } else {
         blocks = textToBlocks(text);
@@ -161,7 +169,10 @@ export function justify(text: string, n : number = 80, depth : number = 2): stri
             } else {
                 block = justifyBlock(block, m - l);
             }
-            block = prependMultilinePrefix(block, textIndentation + blockPrefix);
+            block = prependMultilinePrefix(
+                block,
+                textIndentation + blockPrefix,
+            );
             newText += block;
         }
 
