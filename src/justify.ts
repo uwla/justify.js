@@ -95,7 +95,9 @@ export function justifyBlock(text: string, n : number  = 80): string {
 
     // last sentence is also handled different.
     let lastSentence = sentences[l - 1] as Sentence;
-    newText += lastSentence.words.join(' ');
+
+    // join the words of the last sentence and trim whitespace
+    newText += lastSentence.words.join(" ").replace(/\s+$/, '');
 
     return newText;
 }
@@ -138,15 +140,16 @@ export function justify(text: string, n : number = 80, depth : number = 2): stri
 
     let m = n - textIndentation.length;
 
-    for (let block of blocks) {
-        if (isBlank(block)) {
-            newText += '\n';
-        } else if (isStartOfListItem(block)) {
+    let nBlocks = blocks.length;
+    for (let i = 0; i < nBlocks; i += 1) {
+        let block = blocks[i] as any;
+
+        if (isStartOfListItem(block)) {
             block = justifyListItem(block, m);
             newText += textIndentation + block;
-        } else {
+        } else if (!isBlank(block)) {
             let blockPrefix = detectMultilinePrefix(block);
-            if (blockPrefix === '') {
+            if (blockPrefix === "") {
                 blockPrefix = detectIndentation(block);
             }
             let l = blockPrefix.length;
@@ -160,6 +163,10 @@ export function justify(text: string, n : number = 80, depth : number = 2): stri
             }
             block = prependMultilinePrefix(block, textIndentation + blockPrefix);
             newText += block;
+        }
+
+        if (i !== nBlocks - 1) {
+            newText += "\n";
         }
     }
 
