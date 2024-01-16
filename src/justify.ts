@@ -6,7 +6,7 @@ type Sentence = {
 };
 
 export function justifyBlock(text: string, n : number  = 80): string {
-    const words = text.split(' ');
+    const words = (text as any).replace(/[\s\n]+/g, ' ').split(' ');
 
     // this data structure will be used to build the text
     let sentences : Sentence[] = [
@@ -150,9 +150,11 @@ export function justify(text: string, n : number = 80, depth : number = 2): stri
                 blockPrefix = detectIndentation(block);
             }
             let l = blockPrefix.length;
-            block = removeMultilinePrefix(block, blockPrefix);
+            if (l > 0) {
+                block = removeMultilinePrefix(block, blockPrefix);
+            }
             if (depth > 0 && l > 0) {
-                block = justify(block, m - l, depth);
+                block = justify(block, m - l, depth - 1);
             } else {
                 block = justifyBlock(block, m - l);
             }
