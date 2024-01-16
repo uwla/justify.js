@@ -153,18 +153,22 @@ export function detectMultilinePrefix(text: string): string {
 export function removeMultilinePrefix(text: string, prefix: string) {
     const lines = text.split("\n");
     let newText = '';
+    let lastLine = lines.pop() as any;
     for (let line of lines) {
         let newLine = line.replace(prefix as any, '');
         newText += newLine + "\n";
     }
+    newText += lastLine.replace(prefix as any, '');
     return newText;
 }
 
 export function prependMultilinePrefix(text: string, prefix: string) {
     const lines = text.split("\n");
     let newText = '';
+    let lastLine = lines.pop();
     for (let line of lines) {
         newText += prefix + line + "\n";
     }
+    newText += prefix + lastLine;
     return newText;
 }
