@@ -7,7 +7,7 @@ Justify-align plain text using JavaScript.
 Install it with `npm` or your preferred package manager:
 
 ```shell
-npm install @uwlajs/justify.js
+npm install @uwlajs/justify
 ```
 
 ## Usage
@@ -15,7 +15,7 @@ npm install @uwlajs/justify.js
 Sample usage:
 
 ```javascript
-import justify from '@uwlajs/justify.js';
+import justify from '@uwlajs/justify';
 
 const textToBeJustified = "...";
 const justifiedText = justify(textToBeJustified);

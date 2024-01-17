@@ -10,20 +10,20 @@
     "exports": {
         ".": {
             "import": {
-                "default": "./dist/justify.js",
-                "types": "./dist/justify.d.ts"
+                "types": "./dist/justify.d.ts",
+                "default": "./dist/justify.js"
             },
             "require": {
-                "default": "./dist/justify.umd.cjs",
-                "types": "./dist/justify.d.ts"
+                "types": "./dist/justify.d.ts",
+                "default": "./dist/justify.umd.cjs"
             }
         }
     },
     "license": "MIT",
     "main": "dist/justify.cjs",
     "module": "dist/justify.js",
-    "name": "justify.js",
-    "private": "false",
+    "name": "@uwlajs/justify",
+    "private": false,
     "repository": {
         "url": "https://github.com/uwla/justify.js"
     },
@@ -33,5 +33,5 @@
     },
     "type": "module",
     "typings": "dist/justify.d.ts",
-    "version": "0.0.1"
+    "version": "1.0.2"
 }

@@ -1,0 +1,9 @@
+.editorconfig
+.git*
+.prettierrc
+.vscode/
+node_modules/
+src/
+tests/
+tsconfig.*
+vite.config.ts
