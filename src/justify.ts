@@ -32,7 +32,7 @@ export function justifyBlock(text: string, n: number = 80): string {
                 words: [word],
             });
         } else {
-            let sentence = sentences.at(-1) as Sentence;
+            let sentence = sentences[sentences.length - 1] as Sentence;
             sentence.words.push(word);
 
             // extra offset due to space preceding the word
@@ -183,3 +183,5 @@ export function justify(
 
     return newText;
 }
+
+export default justify;
