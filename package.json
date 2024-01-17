@@ -1,11 +1,37 @@
 {
-    "nam": "justify.js",
-    "scripts": {
-        "build": "tsc",
-        "test": "vitest"
-    },
+    "author": "uwlajs",
+    "dependencies": {},
+    "description": "Justify-align plain text.",
     "devDependencies": {
         "typescript": "^5.3.3",
+        "vite": "^5.0.11",
         "vitest": "^1.2.0"
-    }
+    },
+    "exports": {
+        ".": {
+            "import": {
+                "default": "./dist/justify.js",
+                "types": "./dist/justify.d.ts"
+            },
+            "require": {
+                "default": "./dist/justify.umd.cjs",
+                "types": "./dist/justify.d.ts"
+            }
+        }
+    },
+    "license": "MIT",
+    "main": "dist/justify.cjs",
+    "module": "dist/justify.js",
+    "name": "justify.js",
+    "private": "false",
+    "repository": {
+        "url": "https://github.com/uwla/justify.js"
+    },
+    "scripts": {
+        "build": "tsc && mv dist/src/justify.d.ts . && vite build && mv justify.d.ts dist/",
+        "test": "vitest run"
+    },
+    "type": "module",
+    "typings": "dist/justify.d.ts",
+    "version": "0.0.1"
 }
