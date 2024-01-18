@@ -154,6 +154,7 @@ export function justify(
 
         if (isStartOfListItem(block)) {
             block = justifyListItem(block, m);
+            block = block.replace(/\n/g, "\n" + textIndentation);
             newText += textIndentation + block;
         } else if (!isBlank(block)) {
             let blockPrefix = detectMultilinePrefix(block);
