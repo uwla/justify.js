@@ -1,6 +1,6 @@
 import * as justify from "../src/justify";
 import { expect, test } from "vitest";
-import { sampleInput, sampleInputJustified } from "./data";
+import { sampleInput, sampleIndentedListInput, sampleInputJustified, sampleIndentedListJustified } from "./data";
 
 test("justify block", () => {
     const text =
@@ -42,4 +42,5 @@ test("justify list item", () => {
 
 test("justify whole text", () => {
     expect(justify.justify(sampleInput)).toBe(sampleInputJustified);
+    expect(justify.justify(sampleIndentedListInput)).toBe(sampleIndentedListJustified);
 });

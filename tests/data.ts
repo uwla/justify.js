@@ -27,10 +27,12 @@ quis. Rerum repudiandae officia veritatis fugiat aliquid iure voluptatem at.
 Culpa repellendus incidunt et ut. Et neque et in id consequatur omnis. Qui optio
 et expedita blanditiis nisi.
 
-1. Occaecati quo quo aut ut.
-2. Atque vel ducimus modi in consequatur.
-3. Numquam et ut ipsam.
-4. Eos molestiae tenetur ex assumenda et reiciendis.
+        1. Mean prevent wait garden operation eat age. Discover late test near cultural.
+        2. Despite clearly necessary.
+        3. Task future result detail.  Detail pay sometimes foreign. Serious race author. Early sell walk amount decision gun house conference.
+        4. Program customer computer. Standard approach two crime expert. Eye dog certainly upon safe.
+        Executive beautiful among event low activity according family. Crime run boy issue worry there.
+        Around room measure red enter pretty particular. Hair computer push material worker value. Provide believe foreign back leave.
 
 Esse fuga debitis aperiam dolorum vero quia sed rerum. Sit temporibus voluptatem
 nostrum quisquam accusantium ea non nulla. Vero et et quas aut. Sunt voluptates
@@ -97,10 +99,16 @@ quis. Rerum repudiandae officia veritatis fugiat  aliquid  iure  voluptatem  at.
 Culpa repellendus incidunt et ut. Et neque et in id consequatur omnis. Qui optio
 et expedita blanditiis nisi.
 
-1. Occaecati quo quo aut ut.
-2. Atque vel ducimus modi in consequatur.
-3. Numquam et ut ipsam.
-4. Eos molestiae tenetur ex assumenda et reiciendis.
+        1. Mean prevent wait garden operation eat age. Discover late  test  near
+           cultural.
+        2. Despite clearly necessary.
+        3. Task future result detail. Detail pay sometimes foreign. Serious race
+           author. Early sell walk amount decision gun house conference.
+        4. Program customer computer. Standard approach two  crime  expert.  Eye
+           dog certainly upon safe. Executive beautiful among event low activity
+           according family. Crime  run  boy  issue  worry  there.  Around  room
+           measure red enter pretty  particular.  Hair  computer  push  material
+           worker value. Provide believe foreign back leave.
 
 Esse fuga debitis aperiam dolorum vero quia sed rerum. Sit temporibus voluptatem
 nostrum quisquam accusantium ea non nulla. Vero et et quas aut. Sunt  voluptates
@@ -157,3 +165,21 @@ Eaque delectus harum et cupiditate aut dolorum aut aut.
     quia incidunt voluptatem et in magni quis repudiandae. Maiores  aut  ut  quo
     sequi error corrupti in vero.
 `
+
+export const sampleIndentedListInput = `        1. Mean prevent wait garden operation eat age. Discover late test near cultural.
+        2. Despite clearly necessary.
+        3. Task future result detail.  Detail pay sometimes foreign. Serious race author. Early sell walk amount decision gun house conference.
+        4. Program customer computer. Standard approach two crime expert. Eye dog certainly upon safe.
+        Executive beautiful among event low activity according family. Crime run boy issue worry there.
+        Around room measure red enter pretty particular. Hair computer push material worker value. Provide believe foreign back leave.`;
+
+export const sampleIndentedListJustified = `        1. Mean prevent wait garden operation eat age. Discover late  test  near
+           cultural.
+        2. Despite clearly necessary.
+        3. Task future result detail. Detail pay sometimes foreign. Serious race
+           author. Early sell walk amount decision gun house conference.
+        4. Program customer computer. Standard approach two  crime  expert.  Eye
+           dog certainly upon safe. Executive beautiful among event low activity
+           according family. Crime  run  boy  issue  worry  there.  Around  room
+           measure red enter pretty  particular.  Hair  computer  push  material
+           worker value. Provide believe foreign back leave.`;
