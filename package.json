@@ -33,5 +33,5 @@
     },
     "type": "module",
     "typings": "dist/justify.d.ts",
-    "version": "1.0.2"
+    "version": "1.0.3"
 }
