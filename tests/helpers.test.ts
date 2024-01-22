@@ -38,6 +38,8 @@ test("recognizes start of list item", () => {
     const tests_1 = [
         "- test test test test.",
         "* test test test test.",
+        "a. test test test test.",
+        "a) test test test test.",
         "5. test test test test.",
         "5) test test test test.",
         "15. test test test test.",
@@ -50,6 +52,8 @@ test("recognizes start of list item", () => {
         "-test test test test.",
         "-- test test test test.",
         "** test test test test.",
+        "a.test test test test.",
+        "a)test test test test.",
         "5 test test test test.",
         "5.test test test test.",
         "5)test test test test.",

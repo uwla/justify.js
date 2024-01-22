@@ -1,5 +1,5 @@
 export const REGEX_BLANK = "^[\\s\\t]*$";
-export const REGEX_BULLET = "\\d+[\\.\\)]|[\\*-]|\\\\item|\\[\\d+\\]";
+export const REGEX_BULLET = "[a-z][\\.\\)]|\\d+[\\.\\)]|[\\*-]|\\\\item|\\[\\d+\\]";
 export const REGEX_LIST_ITEM = `^(${REGEX_BULLET}) `;
 export const REGEX_LIST_ITEM_INDENTED = `^[\\s\t]+(${REGEX_BULLET}) `;
 export const REGEX_LATEX_CMD = "^\\\\[a-z]+(\\[.*?\\])?{.*?}$";
