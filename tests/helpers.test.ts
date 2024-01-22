@@ -2,6 +2,7 @@ import { test, expect } from "vitest";
 import {
     detectMultilinePrefix,
     isBlank,
+    isIndented,
     isLatexCommand,
     isStartOfListItem,
     prependMultilinePrefix,
@@ -101,12 +102,32 @@ test("recognizes start of list item", () => {
     }
 });
 
+test("recognizes indented lines", () => {
+    const tests_1 = [
+        '    test test test test test test test test test test test',
+        "\t\ttest test test test test test test test test test test",
+    ];
+    const tests_2 = [
+        'test test test test test test test test test test test',
+        ' test test test test test test test test test test test',
+    ];
+
+    for (let test of tests_1) {
+        expect(isIndented(test)).toBe(true);
+    }
+    for (let test of tests_2) {
+        expect(isIndented(test)).toBe(false);
+    }
+});
+
 test("recognizes LaTeX commands", () => {
     const tests_1 = [
         "\\section{Chapter 1}",
         "\\begin{center}",
-        "\\includegraphics{image.png}",
-        "\\includegraphics[width=1]{image.png}",
+        "   \\begin{figure}",
+        "       \\includegraphics{image.png}",
+        "       \\includegraphics[width=1]{image.png}",
+        "   \\end{figure}",
         "\\end{center}",
     ];
     const tests_2 = [
@@ -125,10 +146,16 @@ test("recognizes LaTeX commands", () => {
 
 test("parses text to blocks", () => {
     const tests = [
+        "2. Despite clearly necessary.\n  a) Next dinner week oil.\n  b) Represent in hold sort account indeed. Traditional thousand at father play source. Great bit concern soldier alone already couple.\n  c) Some measure issue various positive ability up.\n3. Task future result detail.  Detail pay sometimes foreign. Serious race author. Early sell walk amount decision gun house conference.",
         "\nA quo autem hic quis id neque. Dolor numquam non iure.\nQuod ipsum officia ad repudiandae est id.\n\nEveniet dolores quis debitis. Deserunt quod tempora rerum ea hic cum.\nEst aperiam velit corrupti.\nLaudantium et laboriosam placeat quia consequatur perspiciatis id molestias.\n\nBlanditiis magnam consequatur aperiam rerum rerum.\nVoluptas cumque rerum et molestias quos at quis.",
         "A quo autem hic quis id neque. Dolor numquam non iure.\n\n\n\nBlanditiis magnam consequatur aperiam rerum rerum.\nVoluptas cumque rerum et molestias quos at quis.",
     ];
     const expected = [
+        [
+            "2. Despite clearly necessary.",
+            "  a) Next dinner week oil.\n  b) Represent in hold sort account indeed. Traditional thousand at father play source. Great bit concern soldier alone already couple.\n  c) Some measure issue various positive ability up.",
+            "3. Task future result detail.  Detail pay sometimes foreign. Serious race author. Early sell walk amount decision gun house conference.",
+        ],
         [
             "",
             "A quo autem hic quis id neque. Dolor numquam non iure.\nQuod ipsum officia ad repudiandae est id.",
