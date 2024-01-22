@@ -1,9 +1,10 @@
 export const REGEX_BLANK = "^[\\s\\t]*$";
+export const REGEX_INDENTED = "^(\\t+|\\s\\s)+"
 export const REGEX_ALPHANUMERIC = "([a-z]|\\d+|x?v?i{0,3}|i?[xv])"
 export const REGEX_BULLET = `${REGEX_ALPHANUMERIC}[\\.\\)]|[\\*-]|\\\\item|\\[${REGEX_ALPHANUMERIC}\\]`;
 export const REGEX_LIST_ITEM = `^(${REGEX_BULLET}) `;
 export const REGEX_LIST_ITEM_INDENTED = `^[\\s\t]+(${REGEX_BULLET}) `;
-export const REGEX_LATEX_CMD = "^\\\\[a-z]+(\\[.*?\\])?{.*?}$";
+export const REGEX_LATEX_CMD = "^(\\t|\\s)*\\\\[a-z]+(\\[.*?\\])?{.*?}$";
 export const REGEX_MARKDOWN_TITLE = "^#+ .+";
 
 export function match(text: string, regex: string) {
@@ -12,6 +13,10 @@ export function match(text: string, regex: string) {
 
 export function isBlank(line: string): Boolean {
     return match(line, REGEX_BLANK);
+}
+
+export function isIndented(line: string): Boolean {
+    return match(line, REGEX_INDENTED);
 }
 
 export function isStartOfListItem(line: string): Boolean {
@@ -47,29 +52,60 @@ export function textToBlocks(text: string): string[] {
     for (let i = 0; i < l; i += 1) {
         let line: string = lines[i];
 
+        // handle blank lines and begin/end latex blocks
         if (isBlank(line) || isLatexCommand(line)) {
             if (block !== "") {
                 blocks.push(block);
             }
             blocks.push(line);
             block = "";
-        } else if (isStartOfListItem(line)) {
+            continue;
+        }
+
+        // handle list items
+        if (isStartOfListItem(line)) {
             if (block !== "") {
                 blocks.push(block);
             }
             block = line;
-        } else {
-            if (block !== "") {
-                block += "\n";
-            }
-            block += line;
+            continue;
         }
 
-        // We are in the last line and have a non-empty block, so add it.
-        // If block is blank, it was already added.
-        if (i === l - 1 && !isBlank(block)) {
+        // handle indentation
+        if (isIndented(line)) {
+            if (block !== "") {
+                blocks.push(block);
+            }
+            block = line;
+
+            let indentation = detectIndentation(line);
+            let regex = `^${indentation}[^\\t\\s]+`;
+            for (let j = i+1; j < l; j+=1) {
+                let nextLine = lines[j];
+                if (match(nextLine, regex)) {
+                    block += "\n" + nextLine;
+                    i += 1;
+                } else {
+                    break;
+                }
+            }
             blocks.push(block);
+            block = '';
+
+            continue;
         }
+
+        // normal line
+        if (block !== "") {
+            block += "\n";
+        }
+        block += line;
+    }
+
+    // if block isn't blank, it means it has text that wans't added.
+    // so, we add the remaining text.
+    if (!isBlank(block)) {
+        blocks.push(block);
     }
 
     return blocks;

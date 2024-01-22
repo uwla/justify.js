@@ -3,6 +3,7 @@ import {
     detectIndentation,
     detectMultilinePrefix,
     isBlank,
+    isIndented,
     isStartOfListItem,
     prependMultilinePrefix,
     removeMultilinePrefix,
@@ -131,6 +132,7 @@ export function justifyListItem(text: string, n: number): string {
     return newText;
 }
 
+// TODO: add option for tabs
 export function justify(
     text: string,
     n: number = 80,
