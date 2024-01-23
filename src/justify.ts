@@ -136,7 +136,7 @@ export function justifyListItem(text: string, n: number): string {
 export function justify(
     text: string,
     n: number = 80,
-    depth: number = 2,
+    depth: number = 3,
 ): string {
     let newText = "";
     let textIndentation = detectIndentation(text);

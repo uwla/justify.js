@@ -23,10 +23,11 @@ test("justify list item", () => {
     const n = 80;
     const original =
         "Est incidunt perferendis sed beatae sint provident culpa. Ducimus ea nemo animi ea et et et. Cumque eos quidem in quia velit vel rerum. Repellendus possimus provident qui veritatis magnam totam.";
-    const bullets = ["- ", "* ", "\\item ", "1. ", "1) ", "12. ", "12) "];
+    const bullets = ["- ", "a) ", "xii. ", "\\item ", "1. ", "1) ", "12. ", "12) "];
     const expected = [
         "- Est incidunt perferendis sed beatae sint  provident  culpa.  Ducimus  ea  nemo\n  animi ea et et et. Cumque eos quidem in  quia  velit  vel  rerum.  Repellendus\n  possimus provident qui veritatis magnam totam.",
-        "* Est incidunt perferendis sed beatae sint  provident  culpa.  Ducimus  ea  nemo\n  animi ea et et et. Cumque eos quidem in  quia  velit  vel  rerum.  Repellendus\n  possimus provident qui veritatis magnam totam.",
+        "a) Est incidunt perferendis sed beatae sint provident  culpa.  Ducimus  ea  nemo\n   animi ea et et et. Cumque eos quidem in quia  velit  vel  rerum.  Repellendus\n   possimus provident qui veritatis magnam totam.",
+        "xii. Est incidunt perferendis sed beatae sint provident culpa. Ducimus  ea  nemo\n     animi ea et et et. Cumque eos quidem in quia velit vel  rerum.  Repellendus\n     possimus provident qui veritatis magnam totam.",
         "\\item Est incidunt perferendis sed beatae sint provident culpa. Ducimus ea  nemo\n      animi ea et et et. Cumque eos quidem in quia velit vel rerum.  Repellendus\n      possimus provident qui veritatis magnam totam.",
         "1. Est incidunt perferendis sed beatae sint provident  culpa.  Ducimus  ea  nemo\n   animi ea et et et. Cumque eos quidem in quia  velit  vel  rerum.  Repellendus\n   possimus provident qui veritatis magnam totam.",
         "1) Est incidunt perferendis sed beatae sint provident  culpa.  Ducimus  ea  nemo\n   animi ea et et et. Cumque eos quidem in quia  velit  vel  rerum.  Repellendus\n   possimus provident qui veritatis magnam totam.",

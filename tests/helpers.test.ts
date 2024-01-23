@@ -38,7 +38,6 @@ test("recognizes blank lines", () => {
 test("recognizes start of list item", () => {
     const tests_1 = [
         "- test test test test.",
-        "* test test test test.",
         "a. test test test test.",
         "a) test test test test.",
         "i. test test test test.",
@@ -66,7 +65,7 @@ test("recognizes start of list item", () => {
     const tests_2 = [
         "-test test test test.",
         "-- test test test test.",
-        "** test test test test.",
+        "* test test test test.",
         "a.test test test test.",
         "a)test test test test.",
         "i.test test test test.",
@@ -153,7 +152,9 @@ test("parses text to blocks", () => {
     const expected = [
         [
             "2. Despite clearly necessary.",
-            "  a) Next dinner week oil.\n  b) Represent in hold sort account indeed. Traditional thousand at father play source. Great bit concern soldier alone already couple.\n  c) Some measure issue various positive ability up.",
+            "  a) Next dinner week oil.",
+            "  b) Represent in hold sort account indeed. Traditional thousand at father play source. Great bit concern soldier alone already couple.",
+            "  c) Some measure issue various positive ability up.",
             "3. Task future result detail.  Detail pay sometimes foreign. Serious race author. Early sell walk amount decision gun house conference.",
         ],
         [

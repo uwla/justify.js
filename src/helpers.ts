@@ -1,11 +1,12 @@
 export const REGEX_BLANK = "^[\\s\\t]*$";
 export const REGEX_INDENTED = "^(\\t+|\\s\\s)+"
 export const REGEX_ALPHANUMERIC = "([a-z]|\\d+|x?v?i{0,3}|i?[xv])"
-export const REGEX_BULLET = `${REGEX_ALPHANUMERIC}[\\.\\)]|[\\*-]|\\\\item|\\[${REGEX_ALPHANUMERIC}\\]`;
+export const REGEX_BULLET = `${REGEX_ALPHANUMERIC}[\\.\\)]|\\-|\\\\item|\\[${REGEX_ALPHANUMERIC}\\]`;
 export const REGEX_LIST_ITEM = `^(${REGEX_BULLET}) `;
-export const REGEX_LIST_ITEM_INDENTED = `^[\\s\t]+(${REGEX_BULLET}) `;
+export const REGEX_LIST_ITEM_INDENTED = `^[\\s\\t]*(${REGEX_BULLET}) `;
 export const REGEX_LATEX_CMD = "^(\\t|\\s)*\\\\[a-z]+(\\[.*?\\])?{.*?}$";
 export const REGEX_MARKDOWN_TITLE = "^#+ .+";
+export const REGEX_MULTILINE_COMMENT = "^(\\t|\\s\\s)*(//|--|\"|\\*|#)"
 
 export function match(text: string, regex: string) {
     return text.match(regex as any) !== null;
@@ -48,9 +49,15 @@ export function textToBlocks(text: string): string[] {
     const l = lines.length;
     let blocks: string[] = [];
     let block: string = "";
+    let line : string;
+    let otherLine: string;
+    let indentation : string;
+    let regex : string;
+    let i : number;
+    let j : number;
 
-    for (let i = 0; i < l; i += 1) {
-        let line: string = lines[i];
+    for (i = 0; i < l; i += 1) {
+        line = lines[i];
 
         // handle blank lines and begin/end latex blocks
         if (isBlank(line) || isLatexCommand(line)) {
@@ -78,17 +85,58 @@ export function textToBlocks(text: string): string[] {
             }
             block = line;
 
-            let indentation = detectIndentation(line);
-            let regex = `^${indentation}[^\\t\\s]+`;
-            for (let j = i+1; j < l; j+=1) {
-                let nextLine = lines[j];
-                if (match(nextLine, regex)) {
-                    block += "\n" + nextLine;
-                    i += 1;
-                } else {
+            let isList = isIndentedStartOfListItem(line);
+            indentation = detectIndentation(line);
+            regex = `^${indentation}[^\\t\\s]+`;
+            for (j = i+1; j < l; j+=1) {
+                otherLine = lines[j];
+                if (! match(otherLine, regex)) {
+                    break
+                }
+                if (isList && (isIndentedStartOfListItem(otherLine) || isLatexCommand(otherLine))) {
                     break;
                 }
+                block += "\n" + otherLine;
             }
+
+            // get the prefix to apply heuristics to edge cases.
+            let prefix = detectMultilinePrefix(block);
+
+            // edge case when prefix is the same as line
+            if (prefix === line) {
+                blocks.push(line) 
+                block = '';
+                continue;
+            }
+
+            // heuristic to handle edge cases where the indentation  logic  ends
+            // up including lines which have the same indentation but  different
+            // prefixes (such as in code comments).
+            if (prefix !== indentation && j !== i+1) {
+                // if prefix is distinct than indentation, it may be a comment,
+                // which is usually followed by a space after the prefix.
+                if (! prefix.endsWith(" ")) {
+                    prefix += " ";
+                }
+
+                // if our assumption is right, we want to include only  prefixed
+                // lines in the block we will attach.
+                if (line.startsWith(prefix)) {
+                    block = line;
+                    for (j = i+1; j < l; j+=1) {
+                        otherLine = lines[j];
+                        if (! otherLine.startsWith(prefix)) { 
+                            break;
+                        }
+                        block += "\n" + otherLine;
+                    }
+                }
+            }
+
+            // update i, because we checked the next lines.
+            i = j-1;
+
+            // add block
             blocks.push(block);
             block = '';
 
@@ -144,7 +192,7 @@ export function detectMultilinePrefix(text: string): string {
     }
 
     let firstLine = lines[0];
-    let linesAfterTheFirst = lines.slice(0, l - 1);
+    let linesAfterTheFirst = lines.slice(1, l);
     let prefix = "";
     let i = 0;
     while (true) {
@@ -176,8 +224,14 @@ export function detectMultilinePrefix(text: string): string {
     // Some list item bullets such as *, -, \item, are  not  treated  like  prefixes
     // because such prefixes only apply  to  the  first  line,  not  to  all  lines.
     // Therefore, if pattern matches a list item, it is not a prefix.
-    if (isIndentedStartOfListItem(prefix)) {
-        return "";
+    if (match(prefix, '^[\\s\\t]+[^\\s\\t]')) {
+        if (isStartOfListItem(firstLine.replace('^[\\s\\t]+', ''))) {
+            return "";
+        }
+    }
+
+    if (match(prefix, REGEX_MULTILINE_COMMENT + ' +$')) {
+        return prefix.replace('/ +$/', '')
     }
 
     // remove alpha numeric characters from pattern
