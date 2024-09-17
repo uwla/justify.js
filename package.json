@@ -1,7 +1,7 @@
 {
     "author": "uwlajs",
     "dependencies": {},
-    "description": "Justify-align plain text.",
+    "description": "Justify-align plain text",
     "devDependencies": {
         "typescript": "^5.3.3",
         "vite": "^5.0.11",
@@ -33,5 +33,5 @@
     },
     "type": "module",
     "typings": "dist/justify.d.ts",
-    "version": "1.1.0"
+    "version": "1.1.1"
 }

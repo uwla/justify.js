@@ -3,7 +3,6 @@ import {
     detectIndentation,
     detectMultilinePrefix,
     isBlank,
-    isIndented,
     isStartOfListItem,
     prependMultilinePrefix,
     removeMultilinePrefix,
